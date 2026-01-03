@@ -1,156 +1,134 @@
 # SmartFold — Laundry Management System
 
-A comprehensive web application for managing laundry operations, built with Spring Boot and a modern vanilla JavaScript frontend.
+A comprehensive, enterprise-grade web application for managing laundry operations. Built with a robust Spring Boot backend and a modern, responsive vanilla JavaScript frontend.
 
-## Technology Stack
+![SmartFold Banner](https://via.placeholder.com/1200x400?text=SmartFold+Laundry+System)
 
-| Layer      | Technology                          |
-|------------|-------------------------------------|
-| Backend    | Spring Boot 3, Java 17+             |
-| Database   | H2 (in-memory, development)         |
-| Frontend   | HTML5, CSS3, Vanilla JavaScript     |
-| Charts     | Chart.js                            |
+## 🚀 Quick Start
 
-## Features
+### 1. Prerequisites
+- **Java 17** or higher
+- **Gradle** (wrapper included)
 
-### Customer Portal
-- Place laundry orders with service selection and scheduling
-- Real-time order tracking with visual timeline
-- Order history and status updates
-- Subscription plans (Weekly, Bi-Weekly, Monthly)
-- Apply promotional codes at checkout
-- Contact support via in-app messaging
-- Rate and review completed orders
-
-### Admin Console
-- Dashboard with KPIs and analytics charts
-- Order management and status updates
-- Service catalog configuration
-- User management
-- Inventory tracking with low-stock alerts
-- Promotional code management (fixed + percentage discounts)
-- Customer communication center
-
-### Driver Portal
-- Daily task list (pickups and deliveries)
-- Mark tasks as in-progress or completed
-- View customer details and addresses
-
-### Design & UX
-- Modern, responsive interface with glassmorphism aesthetics
-- Dark mode support (system-wide toggle)
-- Toast notifications and form validation
-- Smooth animations and micro-interactions
-
-## Getting Started
-
-### Prerequisites
-- Java 17 or higher (for backend)
-- Gradle (wrapper included)
-
-### Running the Application
-
-**Full Stack (Recommended)**
+### 2. Run the Application
 ```bash
+# Clone the repository
+git clone https://github.com/sahansandaruwan/Laundry-Management-System-WEB.git
+
+# Navigate to directory
+cd Laundry-Management-System-WEB
+
+# Run with Gradle
 ./gradlew bootRun
 ```
-Access the application at `http://localhost:8080`
 
-**Frontend Preview (No Java Required)**
-Open any of the following files directly in your browser:
-- `src/main/resources/static/login.html` — Login page
-- `src/main/resources/static/track-order.html` — Order tracking (try IDs: 1001, 1002, 1003)
-- `src/main/resources/static/reviews.html` — Public reviews
-- `src/main/resources/static/subscriptions.html` — Subscription plans
-- `src/main/resources/static/dashboard-driver.html` — Driver portal
+### 3. Access the Portal
+Open your browser and navigate to:
+**`http://localhost:8080`**
 
-The application operates in demo mode with simulated data when the backend is unavailable.
+---
 
-### Database Console
-When the backend is running, access the H2 console:
-- URL: `http://localhost:8080/h2-console`
-- JDBC URL: `jdbc:h2:mem:lms`
-- Username: `sa`
-- Password: *(leave blank)*
+## 🔑 Login Credentials (Demo)
 
-## Demo Credentials
+Use these credentials to explore the different user roles in the system.
 
-| Role     | Email                  | Password |
-|----------|------------------------|----------|
-| Admin    | admin@smartfold.lk     | 1234     |
-| Customer | nimal@smartfold.lk     | 1234     |
-| Customer | ruwan@smartfold.lk     | 1234     |
+| Role | Email | Password | Access Level |
+|------|-------|----------|--------------|
+| **Admin** | `admin@smartfold.lk` | `1234` | Full access to Dashboard, Orders, Users, Inventory, Settings |
+| **Customer** | `nimal@smartfold.lk` | `1234` | Place orders, Track status, View history, Subscriptions |
+| **Customer** | `ruwan@smartfold.lk` | `1234` | Place orders, Track status, View history, Subscriptions |
 
-## Project Structure
+> **Note:** The application starts with an in-memory database (H2). All data resets when the application restarts.
+
+---
+
+## 🌟 Features
+
+### Customer Portal
+- **Order Management**: Place laundry orders with custom service selection (Wash & Fold, Dry Cleaning, etc.).
+- **Real-time Tracking**: Visual timeline showing order progress from Pickup to Delivery.
+- **Subscriptions**: Weekly, Bi-Weekly, and Monthly plans with automated scheduling and discounts.
+- **Reviews**: Public star ratings and testimonials.
+- **Support**: In-app messaging system for customer inquiries.
+
+### Admin Console
+- **Analytics Dashboard**: Visual charts (Chart.js) for revenue, order volume, and customer growth.
+- **Order Processing**: Workflow management (Pending -> In Progress -> Ready -> Delivered).
+- **Inventory Management**: Track detergents, hangers, and supplies with low-stock alerts.
+- **Promo Codes**: Create and manage fixed or percentage-based discount codes.
+- **User Management**: CRM features to view and manage customer profiles.
+
+### Driver Portal
+- **Task List**: Daily delivery and pickup usage.
+- **Route Management**: View customer addresses and contact details.
+- **Status Updates**: Mark tasks as "In Transit" or "Completed" in real-time.
+
+### Design & UX
+- **Modern UI**: Clean, glassmorphism-inspired aesthetic.
+- **Dark Mode**: System-wide theme toggle.
+- **Responsive**: Fully optimized for mobile, tablet, and desktop.
+
+---
+
+## 🛠 Project Structure
+
+The project follows a standard Spring Boot structure with a clean separation of concerns.
 
 ```
 src/main/resources/static/
 ├── css/
-│   └── style.css               # Main stylesheet with theme variables
+│   └── style.css               # centralized stylesheet with CSS variables
 ├── js/
-│   ├── common.js               # Shared utilities and API client
-│   ├── admin.js                # Admin dashboard logic
-│   ├── user.js                 # Customer portal logic
-│   ├── driver.js               # Driver portal logic
-│   ├── track-order.js          # Order tracking timeline
-│   ├── reviews.js              # Public reviews page
-│   ├── login.js                # Authentication handling
-│   ├── register.js             # User registration
-│   ├── place-order.js          # Order creation wizard
-│   └── pay.js                  # Payment flow
-├── dashboard-admin.html        # Admin console
-├── dashboard-user.html         # Customer portal
-├── dashboard-driver.html       # Driver portal
-├── track-order.html            # Order tracking page
-├── reviews.html                # Public reviews
-├── subscriptions.html          # Subscription plans
-├── login.html                  # Authentication page
-├── register.html               # Registration page
-├── place-order.html            # Order creation
-└── pay.html                    # Payment method selection
+│   ├── common.js               # API client, auth logic, theme manager
+│   ├── admin.js                # Admin dashboard controller
+│   ├── user.js                 # Customer dashboard controller
+│   ├── driver.js               # Driver portal controller
+│   ├── track-order.js          # Tracking timeline logic
+│   └── reviews.js              # Reviews component
+├── dashboard-admin.html        # Main admin interface
+├── dashboard-user.html         # Main customer interface
+├── dashboard-driver.html       # Driver task view
+├── track-order.html            # Public tracking page
+├── reviews.html                # Public reviews page
+└── subscriptions.html          # Subscription landing page
 ```
 
-## New Features (v2.0)
+---
 
-| Feature | Description |
-|---------|-------------|
-| Order Tracking | Visual timeline showing order progress through all stages |
-| Subscriptions | Weekly, Bi-Weekly, Monthly plans with discounts |
-| Reviews | Public customer reviews with star ratings |
-| Driver Portal | Task management for pickup/delivery drivers |
-| Promo Codes | Fixed and percentage-based discount codes |
-| Inventory | Stock tracking with low-stock alerts |
-| Dark Mode | System-wide theme toggle |
-| Analytics | Chart.js visualizations for orders and revenue |
+## 🔧 Technology Stack
 
-## Roadmap
+- **Backend**: Spring Boot 3.x, Spring Data JPA, Spring Security
+- **Database**: H2 (In-Memory) for Dev / MySQL or PostgreSQL ready
+- **Frontend**: HTML5, CSS3, Vanilla ES6 JavaScript (No framework complexity)
+- **Visualization**: Chart.js for analytics
+- **Build Tool**: Gradle
 
-The following features require backend implementation:
-- Email/SMS Notifications (SendGrid, Twilio)
-- Multi-Branch Support with MongoDB
+---
 
-## API Endpoints
+## 📡 API Endpoints
 
-| Method | Endpoint                     | Description              |
-|--------|------------------------------|--------------------------|
-| POST   | /api/auth/login              | User authentication      |
-| POST   | /api/auth/register           | User registration        |
-| GET    | /api/orders                  | List orders              |
-| POST   | /api/orders                  | Create order             |
-| PUT    | /api/orders/{id}/status      | Update order status      |
-| GET    | /api/services                | List services            |
-| POST   | /api/payments/checkout       | Initiate payment         |
-| GET    | /api/reviews/public          | Get public reviews       |
-| GET    | /api/delivery-tasks/today    | Get driver tasks         |
+The backend exposes a RESTful API for all frontend interactions.
 
-## Contributing
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/auth/login` | Authenticate user and issue session |
+| `GET` | `/api/orders` | Retrieve list of orders (filtered by role) |
+| `POST` | `/api/orders` | Create a new laundry order |
+| `PUT` | `/api/orders/{id}/status` | Update order workflow status |
+| `GET` | `/api/inventory` | Get current stock levels |
+| `POST` | `/api/promos` | Create new promotional code |
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -m 'Add new feature'`)
-4. Push to the branch (`git push origin feature/new-feature`)
-5. Open a Pull Request
+---
 
-## License
+## 🤝 Contributing
 
-This project is licensed under the MIT License.
+We welcome contributions! Please follow these steps:
+1. Fork the repository.
+2. Create your feature branch: `git checkout -b feature/AmazingFeature`
+3. Commit your changes: `git commit -m 'Add some AmazingFeature'`
+4. Push to the branch: `git push origin feature/AmazingFeature`
+5. Open a Pull Request.
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
