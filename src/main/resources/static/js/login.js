@@ -1,9 +1,14 @@
-import { api, setCurrentUser, toastError, toastSuccess } from "./common.js";
+import { api, setCurrentUser, toastError, toastSuccess, toggleTheme } from "./common.js";
 
 const form = document.getElementById("login-form");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const errorMessage = document.getElementById("login-error");
+
+const themeToggle = document.getElementById("theme-toggle");
+themeToggle?.addEventListener("click", () => {
+    toggleTheme();
+});
 
 const DEMO_USERS = [
     { email: "admin@smartfold.lk", password: "1234", role: "ADMIN", name: "Demo Admin", token: "demo-admin-token" },

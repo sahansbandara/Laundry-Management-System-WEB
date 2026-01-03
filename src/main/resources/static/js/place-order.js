@@ -902,10 +902,10 @@ window.initPlaceOrder = function initPlaceOrder() {
         isHydrating = true;
         state.lines = Array.isArray(nextState.lines)
             ? nextState.lines.map((line) => {
-                  const copy = cloneLine(line, { withNewId: newIds || !line.id });
-                  if (!copy.id) copy.id = createId();
-                  return copy;
-              })
+                const copy = cloneLine(line, { withNewId: newIds || !line.id });
+                if (!copy.id) copy.id = createId();
+                return copy;
+            })
             : [];
         state.express = Boolean(nextState.express);
         state.premiumAddonCount = Number(nextState.premiumAddonCount) || 0;
@@ -940,50 +940,50 @@ window.initPlaceOrder = function initPlaceOrder() {
         if (!payload) return null;
         const lines = Array.isArray(payload.items)
             ? payload.items
-                  .map((item) => {
-                      if (typeof item !== "object" || item === null) return null;
-                      if (Object.prototype.hasOwnProperty.call(item, "weight")) {
-                          const serviceName = String(item.service || "");
-                          const type = serviceName.includes("Dry") ? "dry" : "laundry";
-                          return {
-                              id: createId(),
-                              type,
-                              serviceLabel: serviceName || SERVICE_LABELS[type],
-                              weight: Number(item.weight) || 0,
-                              amount: Number(item.amount) || 0,
-                          };
-                      }
-                      if (Array.isArray(item.categories)) {
-                          const serviceName = String(item.service || "");
-                          const type = serviceName.includes("Wash") ? "washiron" : "pressing";
-                          const categories = item.categories
-                              .map((cat) => ({
-                                  name: cat.name,
-                                  qty: Number(cat.qty) || 0,
-                                  price: Number(cat.price) || 0,
-                              }))
-                              .filter((cat) => cat.qty > 0);
-                          const amount = Number(item.amount) || categories.reduce((sum, cat) => sum + cat.qty * cat.price, 0);
-                          return {
-                              id: createId(),
-                              type,
-                              serviceLabel: serviceName || SERVICE_LABELS[type],
-                              categories,
-                              amount,
-                          };
-                      }
-                      if (Object.prototype.hasOwnProperty.call(item, "count")) {
-                          return {
-                              id: createId(),
-                              type: "premiumService",
-                              serviceLabel: String(item.service || SERVICE_LABELS.premiumService),
-                              count: Number(item.count) || 0,
-                              amount: Number(item.amount) || 0,
-                          };
-                      }
-                      return null;
-                  })
-                  .filter(Boolean)
+                .map((item) => {
+                    if (typeof item !== "object" || item === null) return null;
+                    if (Object.prototype.hasOwnProperty.call(item, "weight")) {
+                        const serviceName = String(item.service || "");
+                        const type = serviceName.includes("Dry") ? "dry" : "laundry";
+                        return {
+                            id: createId(),
+                            type,
+                            serviceLabel: serviceName || SERVICE_LABELS[type],
+                            weight: Number(item.weight) || 0,
+                            amount: Number(item.amount) || 0,
+                        };
+                    }
+                    if (Array.isArray(item.categories)) {
+                        const serviceName = String(item.service || "");
+                        const type = serviceName.includes("Wash") ? "washiron" : "pressing";
+                        const categories = item.categories
+                            .map((cat) => ({
+                                name: cat.name,
+                                qty: Number(cat.qty) || 0,
+                                price: Number(cat.price) || 0,
+                            }))
+                            .filter((cat) => cat.qty > 0);
+                        const amount = Number(item.amount) || categories.reduce((sum, cat) => sum + cat.qty * cat.price, 0);
+                        return {
+                            id: createId(),
+                            type,
+                            serviceLabel: serviceName || SERVICE_LABELS[type],
+                            categories,
+                            amount,
+                        };
+                    }
+                    if (Object.prototype.hasOwnProperty.call(item, "count")) {
+                        return {
+                            id: createId(),
+                            type: "premiumService",
+                            serviceLabel: String(item.service || SERVICE_LABELS.premiumService),
+                            count: Number(item.count) || 0,
+                            amount: Number(item.amount) || 0,
+                        };
+                    }
+                    return null;
+                })
+                .filter(Boolean)
             : [];
 
         return {
@@ -1168,7 +1168,7 @@ window.initPlaceOrder = function initPlaceOrder() {
                 updateRepeatButton();
                 toastSuccess("Order placed successfully");
                 const id = data?.orderId ?? data?.id;
-                const nextUrl = data?.next ?? (id ? `/frontend/pay.html?orderId=${id}` : null);
+                const nextUrl = data?.next ?? (id ? `/pay.html?orderId=${id}` : null);
                 if (!nextUrl) throw new Error("No redirect URL from server");
                 window.location.assign(nextUrl);
             })

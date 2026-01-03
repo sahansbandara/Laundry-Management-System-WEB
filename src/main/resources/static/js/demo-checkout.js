@@ -44,7 +44,7 @@ successBtn?.addEventListener("click", async () => {
             amountLkr: Number.isFinite(amountValue) ? amountValue : 0,
         });
         toastSuccess("Payment successful (demo)");
-        window.location.assign("/frontend/dashboard-user.html?paid=1");
+        window.location.assign("/dashboard-user.html?paid=1");
     } catch (err) {
         console.error(err);
         toastError(err?.message || "Failed to record payment");
@@ -63,7 +63,7 @@ failBtn?.addEventListener("click", async () => {
             amountLkr: Number.isFinite(amountValue) ? amountValue : 0,
         });
         toastError("Payment failed (demo)");
-        window.location.assign("/frontend/dashboard-user.html?failed=1");
+        window.location.assign("/dashboard-user.html?failed=1");
     } catch (err) {
         console.error(err);
         toastError(err?.message || "Failed to report payment failure");

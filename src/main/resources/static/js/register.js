@@ -1,4 +1,4 @@
-import { api, toastError, toastSuccess } from "./common.js";
+import { api, toastError, toastSuccess, toggleTheme } from "./common.js";
 
 const form = document.getElementById("register-form");
 const inputs = {
@@ -6,6 +6,11 @@ const inputs = {
     email: document.getElementById("email"),
     password: document.getElementById("password"),
 };
+
+const themeToggle = document.getElementById("theme-toggle");
+themeToggle?.addEventListener("click", () => {
+    toggleTheme();
+});
 
 function validateEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -67,7 +72,7 @@ form?.addEventListener("submit", async (event) => {
         await api.post("/api/auth/register", payload);
         toastSuccess("Registration successful! Please login.");
         setTimeout(() => {
-            window.location.href = "/frontend/login.html";
+            window.location.href = "/login.html";
         }, 600);
     } catch (error) {
         toastError(error.message);

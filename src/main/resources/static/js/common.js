@@ -161,3 +161,27 @@ export function renderStatusBadge(v) {
 export function confirmAction(message) {
     return window.confirm(message);
 }
+
+/* ---------- Theme ---------- */
+export function initTheme() {
+    const saved = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (saved === "dark" || (!saved && prefersDark)) {
+        document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+        document.documentElement.removeAttribute("data-theme");
+    }
+}
+export function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    if (next === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+        document.documentElement.removeAttribute("data-theme");
+    }
+    localStorage.setItem("theme", next);
+}
+
+// Auto-init theme
+initTheme();

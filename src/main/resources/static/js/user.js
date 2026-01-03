@@ -5,9 +5,15 @@ import {
     toastSuccess,
     clearCurrentUser,
     renderStatusBadge,
+    toggleTheme,
 } from "./common.js";
 
 const user = requireAuth("USER");
+
+const themeToggle = document.getElementById("theme-toggle");
+themeToggle?.addEventListener("click", () => {
+    toggleTheme();
+});
 
 /* --- One-time query param toasts --- */
 (() => {
@@ -56,7 +62,7 @@ const collapsibleToggles = document.querySelectorAll(".card-toggle");
 
 /* KPIs */
 const kpiActive = document.getElementById("kpiActive");
-const kpiSpent  = document.getElementById("kpiSpent");
+const kpiSpent = document.getElementById("kpiSpent");
 const kpiPickup = document.getElementById("kpiPickup");
 
 /* Orders */
@@ -65,11 +71,11 @@ const orderSearch = document.getElementById("orderSearch");
 const orderStatus = document.getElementById("orderStatus");
 const prevPageBtn = document.getElementById("prevPage");
 const nextPageBtn = document.getElementById("nextPage");
-const pageInfo    = document.getElementById("pageInfo");
+const pageInfo = document.getElementById("pageInfo");
 
 /* Support */
-const messageList  = document.getElementById("user-message-list");
-const messageForm  = document.getElementById("user-message-form");
+const messageList = document.getElementById("user-message-list");
+const messageForm = document.getElementById("user-message-form");
 const messageInput = document.getElementById("user-message-input");
 
 /* State */
@@ -103,7 +109,7 @@ const paymentStatusBadge = (status) => {
 logoutBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     clearCurrentUser();
-    window.location.href = "/frontend/login.html";
+    window.location.href = "/login.html";
 });
 
 /* --- Collapsible cards --- */
@@ -211,7 +217,7 @@ async function fetchOrders() {
             { id: 3, serviceType: "Dry Cleaning", quantity: "5 Items", price: 2073, status: "READY", pickupDate: "2025-10-24", deliveryDate: "2025-10-28" },
             { id: 5, serviceType: "Bedding", quantity: "2 Sets", price: 1318, status: "PENDING", pickupDate: "2025-10-24", deliveryDate: "2025-10-29" },
             { id: 8, serviceType: "Stain Removal", quantity: "1 Items", price: 1649, status: "DELIVERED", pickupDate: "2025-10-23", deliveryDate: "2025-10-27" },
-            { id:10, serviceType: "Stain Removal", quantity: "5 Kg", price: 1997, status: "CANCELLED", pickupDate: "2025-10-25", deliveryDate: "2025-10-25" },
+            { id: 10, serviceType: "Stain Removal", quantity: "5 Kg", price: 1997, status: "CANCELLED", pickupDate: "2025-10-25", deliveryDate: "2025-10-25" },
         ];
     }
 }
@@ -245,7 +251,7 @@ function renderOrders() {
     }
 
     const start = (page - 1) * pageSize;
-    const end   = Math.min(start + pageSize, filtered.length);
+    const end = Math.min(start + pageSize, filtered.length);
     const slice = filtered.slice(start, end);
 
     ordersBody.innerHTML = slice
@@ -390,20 +396,20 @@ function handleRowAction(action, order) {
 }
 
 function computeKPIs() {
-    const inactive = new Set(["DELIVERED","CANCELLED"]);
+    const inactive = new Set(["DELIVERED", "CANCELLED"]);
     const activeCount = ordersAll.filter(o => !inactive.has(o.status)).length;
 
-    const spent = ordersAll.reduce((sum,o)=> sum + (Number(o.price)||0), 0);
+    const spent = ordersAll.reduce((sum, o) => sum + (Number(o.price) || 0), 0);
 
     const pickups = ordersAll
         .map(o => new Date(o.pickupDate))
         .filter(d => !Number.isNaN(d.getTime()))
-        .sort((a,b)=>b-a);
+        .sort((a, b) => b - a);
     const lastPickup = pickups.length ? pickups[0] : null;
 
     kpiActive.textContent = `${activeCount}`;
-    kpiSpent.textContent  = Number(spent).toLocaleString(undefined,{maximumFractionDigits:0});
-    kpiPickup.textContent = lastPickup ? lastPickup.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}) : "—";
+    kpiSpent.textContent = Number(spent).toLocaleString(undefined, { maximumFractionDigits: 0 });
+    kpiPickup.textContent = lastPickup ? lastPickup.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : "—";
 }
 
 /* =================
@@ -432,10 +438,10 @@ async function loadMessages() {
         console.warn("Messages API failed, using demo:", err?.message);
         // demo messages
         renderMessages([
-            { fromUserId: user.id, body:"Hello team, checking on order update #4", timestamp: new Date().toISOString() },
-            { fromUserId: adminUser.id, body:"Hi Ruwan, your order is cancelled.", timestamp: new Date().toISOString() },
-            { fromUserId: user.id, body:"Hello team, checking on order update #5", timestamp: new Date().toISOString() },
-            { fromUserId: adminUser.id, body:"Hi Ruwan, your order is ready.", timestamp: new Date().toISOString() },
+            { fromUserId: user.id, body: "Hello team, checking on order update #4", timestamp: new Date().toISOString() },
+            { fromUserId: adminUser.id, body: "Hi Ruwan, your order is cancelled.", timestamp: new Date().toISOString() },
+            { fromUserId: user.id, body: "Hello team, checking on order update #5", timestamp: new Date().toISOString() },
+            { fromUserId: adminUser.id, body: "Hi Ruwan, your order is ready.", timestamp: new Date().toISOString() },
         ]);
     }
 }
@@ -452,7 +458,7 @@ function renderMessages(list) {
             ?.split(" ")
             .map(part => part[0])
             .join("")
-            .slice(0,2)
+            .slice(0, 2)
             .toUpperCase() || "SF";
         return `
       <div class="message-row ${mine ? "mine" : "support"}">
@@ -500,7 +506,7 @@ window.addEventListener("beforeunload", () => pollingInterval && clearInterval(p
 /* =================
    Boot
    ================= */
-(async function boot(){
+(async function boot() {
     if (!user) return;
     await mountPlaceOrderUI();
     await fetchOrders();

@@ -35,7 +35,7 @@
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error || "COD failed");
-        location.assign(data.next ?? "/frontend/dashboard-user.html?cod=1");
+        location.assign(data.next ?? "/dashboard-user.html?cod=1");
       } catch (e) {
         console.error(e);
         alert("COD confirmation failed");
@@ -52,7 +52,7 @@
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Checkout failed");
-      location.assign(data.redirectUrl ?? `/frontend/demo-checkout.html?orderId=${orderId}&amount=0`);
+      location.assign(data.redirectUrl ?? `/demo-checkout.html?orderId=${orderId}&amount=0`);
     } catch (e) {
       console.error(e);
       alert("Payment session creation failed");

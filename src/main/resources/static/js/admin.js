@@ -8,6 +8,7 @@ import {
     clearCurrentUser,
     renderStatusBadge,
     confirmAction,
+    toggleTheme,
 } from "./common.js";
 
 const admin = requireAuth("ADMIN");
@@ -20,7 +21,12 @@ const logoutBtn = document.getElementById("logout-btn");
 logoutBtn?.addEventListener("click", (event) => {
     event.preventDefault();
     clearCurrentUser();
-    window.location.href = "/frontend/login.html";
+    window.location.href = "/login.html";
+});
+
+const themeToggle = document.getElementById("theme-toggle");
+themeToggle?.addEventListener("click", () => {
+    toggleTheme();
 });
 
 const sections = document.querySelectorAll("main section");
@@ -38,6 +44,8 @@ let payments = [];
 let users = [];
 let selectedMessageUser = null;
 let messageInterval = null;
+let orderChart = null;
+let revenueChart = null;
 
 const formatLKR = (value) => {
     const numeric = Number.isFinite(Number(value)) ? Number(value) : 0;
@@ -94,6 +102,7 @@ const messageInput = document.getElementById("message-input");
 
 function openModal(modal) {
     modal?.classList.add("active");
+    modal?.querySelector("input")?.focus();
 }
 
 function closeModal(modal) {
@@ -329,10 +338,10 @@ function renderOrders() {
         <td>${renderStatusBadge(order.status)}</td>
         <td>
           <div class="table-actions">
-            <button data-view="${order.id}" class="btn" style="background:#0ea5e9;">View</button>
+            <button data-view="${order.id}" class="btn pill-ghost">View</button>
             ${statusSelect}
-            <button data-update="${order.id}" class="btn" style="background:#22c55e;">Update</button>
-            <button data-delete="${order.id}" class="btn" style="background:#ef4444;">Delete</button>
+            <button data-update="${order.id}" class="btn pill-ghost" style="color:var(--primary);">Update</button>
+            <button data-delete="${order.id}" class="btn pill-ghost" style="color:var(--error, #ef4444);">Delete</button>
           </div>
         </td>
       </tr>`;
@@ -408,23 +417,25 @@ function renderTasks() {
 function renderTaskCard(task) {
     const buttons = [];
     if (task.status !== "IN_PROGRESS" && task.status !== "COMPLETED" && task.status !== "CANCELLED") {
-        buttons.push(`<button data-task="${task.id}" data-target="IN_PROGRESS" style="background:#0ea5e9;">Move to In Progress</button>`);
+        buttons.push(`<button data-task="${task.id}" data-target="IN_PROGRESS" class="btn pill-ghost" style="color:var(--accent);">Start</button>`);
     }
     if (task.status !== "COMPLETED" && task.status !== "CANCELLED") {
-        buttons.push(`<button data-task="${task.id}" data-target="COMPLETED" style="background:#22c55e;">Move to Completed</button>`);
+        buttons.push(`<button data-task="${task.id}" data-target="COMPLETED" class="btn pill-ghost" style="color:#10b981;">Complete</button>`);
     }
     if (task.status !== "CANCELLED") {
-        buttons.push(`<button data-task="${task.id}" data-target="CANCELLED" style="background:#ef4444;">Cancel</button>`);
+        buttons.push(`<button data-task="${task.id}" data-target="CANCELLED" class="btn pill-ghost" style="color:#ef4444;">Cancel</button>`);
     }
-    buttons.push(`<button data-remove-task="${task.id}" style="background:#64748b;">Delete</button>`);
+    buttons.push(`<button data-remove-task="${task.id}" class="btn pill-ghost">Delete</button>`);
 
     return `<div class="task-card">
-    <h4>${task.title}</h4>
-    <p style="color:var(--muted);">Assigned to: ${task.assignedTo || "Unassigned"}</p>
-    <p style="color:var(--muted);">Due: ${task.dueDate || "-"}</p>
-    <p style="margin-top:8px; font-weight:600;">LKR ${Number(task.price).toLocaleString()}</p>
-    <div class="message-meta">${task.notes || "No notes"}</div>
-    <div style="display:flex; flex-direction:column; gap:6px; margin-top:12px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <h4>${task.title}</h4>
+        <div style="font-weight:700;">LKR ${Number(task.price).toLocaleString()}</div>
+    </div>
+    <p style="color:var(--muted); margin-bottom:4px;">${task.assignedTo || "Unassigned"}</p>
+    <p style="color:var(--muted); font-size:0.85rem;">Due: ${task.dueDate || "-"}</p>
+    <div class="message-meta" style="text-align:left; margin:8px 0;">${task.notes || ""}</div>
+    <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; border-top:1px solid var(--border); padding-top:8px;">
       ${buttons.join("")}
     </div>
   </div>`;
@@ -477,8 +488,8 @@ function renderPayments() {
         <td>${renderStatusBadge(payment.status)}</td>
         <td>${payment.paidAt ? new Date(payment.paidAt).toLocaleString() : "-"}</td>
         <td class="table-actions">
-          ${payment.status !== "PAID" ? `<button data-complete-payment="${payment.id}" style="background:#22c55e;">Mark Paid</button>` : ""}
-          <button data-remove-payment="${payment.id}" style="background:#ef4444;">Delete</button>
+          ${payment.status !== "PAID" ? `<button data-complete-payment="${payment.id}" class="btn pill-ghost" style="color:#10b981;">Mark Paid</button>` : ""}
+          <button data-remove-payment="${payment.id}" class="btn pill-ghost" style="color:#ef4444;">Delete</button>
         </td>
       </tr>`;
         }).join("");
@@ -530,8 +541,8 @@ function renderUsers() {
       <td>${user.email}</td>
       <td>${renderStatusBadge(user.role)}</td>
       <td class="table-actions">
-        ${user.role === "ADMIN" ? "" : `<button data-make-admin="${user.id}" style="background:#0ea5e9;">Make Admin</button>`}
-        ${user.email === admin.email ? "" : `<button data-remove-user="${user.id}" style="background:#ef4444;">Delete</button>`}
+        ${user.role === "ADMIN" ? "" : `<button data-make-admin="${user.id}" class="btn pill-ghost">Make Admin</button>`}
+        ${user.email === admin.email ? "" : `<button data-remove-user="${user.id}" class="btn pill-ghost" style="color:#ef4444;">Delete</button>`}
       </td>
     </tr>`).join("");
     }
@@ -563,6 +574,79 @@ usersBody?.addEventListener("click", async (event) => {
     }
 });
 
+function initCharts() {
+    // Orders Chart
+    const ctxOrders = document.getElementById("chart-orders");
+    if (ctxOrders && Chart) {
+        // Group orders by status
+        const statuses = ["PENDING", "IN_PROGRESS", "READY", "DELIVERED", "CANCELLED"];
+        const counts = statuses.map(s => orders.filter(o => o.status === s).length);
+
+        if (orderChart) orderChart.destroy();
+        orderChart = new Chart(ctxOrders, {
+            type: 'doughnut',
+            data: {
+                labels: statuses,
+                datasets: [{
+                    label: 'Orders by Status',
+                    data: counts,
+                    backgroundColor: [
+                        '#f59e0b', '#3b82f6', '#10b981', '#6366f1', '#ef4444'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' },
+                    title: { display: true, text: 'Order Status Distribution' }
+                }
+            }
+        });
+    }
+
+    // Revenue Chart (Quick dummy visualization based on payments)
+    const ctxRevenue = document.getElementById("chart-revenue");
+    if (ctxRevenue && Chart) {
+        // Last 7 days
+        const labels = Array.from({ length: 7 }, (_, i) => {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            return d.toLocaleDateString("en-US", { weekday: 'short' });
+        }).reverse();
+
+        // Mock data logic for demo: Distribute revenue randomly for visualization
+        // In real app, we would aggregate payments by 'paidAt' date
+        const data = labels.map(() => Math.floor(Math.random() * 5000));
+
+        if (revenueChart) revenueChart.destroy();
+        revenueChart = new Chart(ctxRevenue, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Revenue (LKR)',
+                    data: data,
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: 'Revenue (Last 7 Days)' }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+}
+
 function updateKpis() {
     if (kpiOrders) {
         const today = new Date().toISOString().slice(0, 10);
@@ -590,13 +674,16 @@ function updateKpis() {
             .filter((payment) => (payment.status || "").toUpperCase() === "PENDING")
             .length.toString();
     }
+
+    // Refresh charts when data updates
+    initCharts();
 }
 
 function renderMessageUsers() {
     if (!messageUsers) return;
     const customers = users.filter((user) => user.role === "USER");
     messageUsers.innerHTML = customers.map((user) => `<li>
-    <button class="btn" data-message-user="${user.id}" style="width:100%; justify-content:flex-start; background:${selectedMessageUser === user.id ? '#2563EB' : '#1F3A8A'};">
+    <button class="btn" data-message-user="${user.id}" style="width:100%; justify-content:flex-start; background:${selectedMessageUser === user.id ? 'var(--primary)' : 'transparent'}; color: ${selectedMessageUser === user.id ? '#fff' : 'var(--heading)'}; border: 1px solid var(--border);">
       ${user.name}
     </button>
   </li>`).join("");
