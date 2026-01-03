@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartFold — Track Your Order</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="track-order-page">
+    <header class="navbar app-bar">
+        <div class="container-xl app-bar-inner">
+            <div class="app-brand">
+                <a href="login.html" class="brand-heading">SmartFold</a>
+            </div>
+            <div class="app-actions">
+                <button id="theme-toggle" class="btn-pill pill-ghost" aria-label="Toggle Dark Mode">Theme</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="track-order-main">
+        <div class="container-md">
+            <section class="track-order-hero card-soft">
+                <h1>Track Your Order</h1>
+                <p class="muted">Enter your order ID to see real-time status updates.</p>
+
+                <form id="track-form" class="track-form" novalidate>
+                    <div class="field">
+                        <label for="order-id" class="sr-only">Order ID</label>
+                        <input type="text" id="order-id" name="orderId" placeholder="Enter Order ID (e.g., 1042)"
+                            required />
+                    </div>
+                    <button type="submit" class="btn-primary">Track Order</button>
+                </form>
+            </section>
+
+            <section id="tracking-result" class="tracking-result card-soft" hidden>
+                <header class="tracking-header">
+                    <div>
+                        <h2>Order #<span id="result-order-id">—</span></h2>
+                        <p class="muted" id="result-service">—</p>
+                    </div>
+                    <span class="badge" id="result-status">—</span>
+                </header>
+
+                <div class="tracking-timeline" id="tracking-timeline">
+                    <!-- Timeline steps will be injected here -->
+                </div>
+
+                <div class="tracking-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Customer</span>
+                        <span class="detail-value" id="result-customer">—</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Pickup Date</span>
+                        <span class="detail-value" id="result-pickup">—</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Expected Delivery</span>
+                        <span class="detail-value" id="result-delivery">—</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Total Amount</span>
+                        <span class="detail-value" id="result-amount">—</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tracking-error" class="tracking-error card-soft" hidden>
+                <h2>Order Not Found</h2>
+                <p class="muted">We couldn't find an order with that ID. Please check and try again.</p>
+                <button id="try-again-btn" class="btn-primary">Try Again</button>
+            </section>
+        </div>
+    </main>
+
+    <footer class="track-order-footer">
+        <div class="container-md">
+            <p class="muted small-text">Need help? <a href="dashboard-user.html#support">Contact Support</a></p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/track-order.js"></script>
+</body>
+
+</html>
