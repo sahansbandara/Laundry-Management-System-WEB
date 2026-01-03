@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartFold — Customer Reviews</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="reviews-page">
+    <header class="navbar app-bar">
+        <div class="container-xl app-bar-inner">
+            <div class="app-brand">
+                <a href="login.html" class="brand-heading">SmartFold</a>
+            </div>
+            <div class="app-actions">
+                <button id="theme-toggle" class="btn-pill pill-ghost" aria-label="Toggle Dark Mode">Theme</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="reviews-main">
+        <div class="container-xl">
+            <section class="section-block">
+                <div class="section-header">
+                    <div>
+                        <h1 class="section-title">Customer Reviews</h1>
+                        <p class="muted">See what our customers are saying about SmartFold</p>
+                    </div>
+                </div>
+
+                <div class="average-rating card-soft" style="padding: 32px; margin-bottom: 32px;">
+                    <div class="number" id="avg-rating">4.8</div>
+                    <div class="details">
+                        <div class="star-rating readonly" id="avg-stars">
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                        </div>
+                        <span class="muted" id="review-count">Based on 47 reviews</span>
+                    </div>
+                </div>
+
+                <div class="reviews-grid" id="reviews-list">
+                    <!-- Reviews will be injected here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script type="module" src="js/reviews.js"></script>
+</body>
+
+</html>

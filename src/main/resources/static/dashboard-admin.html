@@ -22,7 +22,9 @@
                     <a href="#orders" class="tab-chip">Orders</a>
                     <a href="#services" class="tab-chip">Services</a>
                     <a href="#users" class="tab-chip">Users</a>
-                    <a href="#contact-customers" class="tab-chip">Contact Customers</a>
+                    <a href="#inventory" class="tab-chip">Inventory</a>
+                    <a href="#promo-codes" class="tab-chip">Promo Codes</a>
+                    <a href="#contact-customers" class="tab-chip">Messages</a>
                     <a href="#settings" class="tab-chip">Settings</a>
                 </nav>
             </div>
@@ -310,6 +312,150 @@
                                 </tr>
                             </thead>
                             <tbody id="users-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="inventory" class="section-block card-soft">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Inventory</h2>
+                        <p class="muted small-text">Track supplies and stock levels</p>
+                    </div>
+                    <div class="section-controls">
+                        <button id="restock-btn" class="btn-primary btn-pill">+ Restock</button>
+                    </div>
+                </div>
+                <div class="section-body">
+                    <div class="inventory-grid" id="inventory-grid">
+                        <div class="inventory-item">
+                            <div class="inventory-icon">🧴</div>
+                            <div class="inventory-name">Detergent</div>
+                            <div class="inventory-stock">45</div>
+                            <div class="inventory-unit">liters</div>
+                            <div class="stock-bar">
+                                <div class="fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="inventory-item low-stock">
+                            <div class="inventory-icon">🌸</div>
+                            <div class="inventory-name">Fabric Softener</div>
+                            <div class="inventory-stock">12</div>
+                            <div class="inventory-unit">liters</div>
+                            <div class="stock-bar low">
+                                <div class="fill" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        <div class="inventory-item">
+                            <div class="inventory-icon">🎽</div>
+                            <div class="inventory-name">Hangers</div>
+                            <div class="inventory-stock">320</div>
+                            <div class="inventory-unit">pieces</div>
+                            <div class="stock-bar">
+                                <div class="fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="inventory-item out-of-stock">
+                            <div class="inventory-icon">🧪</div>
+                            <div class="inventory-name">Starch</div>
+                            <div class="inventory-stock">2</div>
+                            <div class="inventory-unit">kg</div>
+                            <div class="stock-bar critical">
+                                <div class="fill" style="width: 8%"></div>
+                            </div>
+                        </div>
+                        <div class="inventory-item">
+                            <div class="inventory-icon">📦</div>
+                            <div class="inventory-name">Packaging Bags</div>
+                            <div class="inventory-stock">580</div>
+                            <div class="inventory-unit">pieces</div>
+                            <div class="stock-bar">
+                                <div class="fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="promo-codes" class="section-block card-soft">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Promo Codes</h2>
+                        <p class="muted small-text">Manage discounts and promotions</p>
+                    </div>
+                    <div class="section-controls">
+                        <button id="create-promo-btn" class="btn-primary btn-pill">+ Create Code</button>
+                    </div>
+                </div>
+                <div class="section-body">
+                    <div class="table-wrapper table-compact">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Discount</th>
+                                    <th scope="col">Min. Order</th>
+                                    <th scope="col">Usage</th>
+                                    <th scope="col">Expires</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="promo-codes-body">
+                                <tr>
+                                    <td><strong>SAVE200</strong></td>
+                                    <td>Fixed</td>
+                                    <td>LKR 200</td>
+                                    <td>LKR 1,000</td>
+                                    <td>42 / 100</td>
+                                    <td>Jan 31, 2026</td>
+                                    <td><span class="badge status-READY">Active</span></td>
+                                    <td class="table-actions">
+                                        <button class="btn-secondary btn-pill">Edit</button>
+                                        <button class="btn-danger btn-pill">Disable</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SUMMER10</strong></td>
+                                    <td>Percentage</td>
+                                    <td>10%</td>
+                                    <td>LKR 500</td>
+                                    <td>128 / ∞</td>
+                                    <td>Mar 31, 2026</td>
+                                    <td><span class="badge status-READY">Active</span></td>
+                                    <td class="table-actions">
+                                        <button class="btn-secondary btn-pill">Edit</button>
+                                        <button class="btn-danger btn-pill">Disable</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>WELCOME50</strong></td>
+                                    <td>Percentage</td>
+                                    <td>50%</td>
+                                    <td>None</td>
+                                    <td>First order only</td>
+                                    <td>No expiry</td>
+                                    <td><span class="badge status-READY">Active</span></td>
+                                    <td class="table-actions">
+                                        <button class="btn-secondary btn-pill">Edit</button>
+                                        <button class="btn-danger btn-pill">Disable</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>NEWYEAR</strong></td>
+                                    <td>Fixed</td>
+                                    <td>LKR 500</td>
+                                    <td>LKR 2,000</td>
+                                    <td>89 / 100</td>
+                                    <td>Jan 7, 2026</td>
+                                    <td><span class="badge status-CANCELLED">Expired</span></td>
+                                    <td class="table-actions">
+                                        <button class="btn-secondary btn-pill">Clone</button>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

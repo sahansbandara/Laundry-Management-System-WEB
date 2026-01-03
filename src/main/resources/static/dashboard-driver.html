@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartFold — Driver Portal</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="driver-portal">
+    <header class="navbar app-bar">
+        <div class="container-xl app-bar-inner">
+            <div class="app-brand">
+                <h1 class="brand-heading">SmartFold</h1>
+                <span class="muted small-text" style="margin-left: 12px;">Driver Portal</span>
+            </div>
+            <div class="app-actions">
+                <button id="theme-toggle" class="btn-pill pill-ghost" aria-label="Toggle Dark Mode">Theme</button>
+                <span id="driver-name" class="muted small-text"></span>
+                <button id="logout-btn" class="pill-ghost pill-logout">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="driver-dashboard">
+        <div class="container-xl">
+            <section class="section-block">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Today's Tasks</h2>
+                        <p class="muted small-text" id="task-date">Loading...</p>
+                    </div>
+                    <div class="section-controls">
+                        <select id="filter-status" class="select-lg">
+                            <option value="ALL">All Tasks</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="IN_TRANSIT">In Transit</option>
+                            <option value="COMPLETED">Completed</option>
+                        </select>
+                        <button id="refresh-btn" class="pill-ghost">Refresh</button>
+                    </div>
+                </div>
+
+                <div class="kpi-row" style="margin-bottom: 24px;">
+                    <article class="kpi-card">
+                        <span class="kpi-label">Pending</span>
+                        <span class="kpi-value" id="kpi-pending">0</span>
+                    </article>
+                    <article class="kpi-card">
+                        <span class="kpi-label">In Transit</span>
+                        <span class="kpi-value" id="kpi-transit">0</span>
+                    </article>
+                    <article class="kpi-card">
+                        <span class="kpi-label">Completed</span>
+                        <span class="kpi-value" id="kpi-completed">0</span>
+                    </article>
+                </div>
+
+                <div class="driver-task-list" id="task-list">
+                    <!-- Tasks will be injected here -->
+                </div>
+
+                <div id="empty-state" class="card-soft" style="text-align: center; padding: 48px;" hidden>
+                    <h3>No tasks for today</h3>
+                    <p class="muted">Check back later or contact dispatch.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script type="module" src="js/driver.js"></script>
+</body>
+
+</html>
