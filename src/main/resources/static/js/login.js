@@ -11,10 +11,12 @@ themeToggle?.addEventListener("click", () => {
 });
 
 const DEMO_USERS = [
-    { email: "admin@smartfold.lk", password: "1234", role: "ADMIN", name: "Demo Admin", token: "demo-admin-token" },
-    { email: "nimal@smartfold.lk", password: "1234", role: "USER", name: "Nimal Perera", token: "demo-nimal-token" },
-    { email: "ruwan@smartfold.lk", password: "1234", role: "USER", name: "Ruwan Fernando", token: "demo-ruwan-token" },
-    { email: "kamal@smartfold.lk", password: "1234", role: "USER", name: "Kamal Jayasuriya", token: "demo-kamal-token" },
+    { email: "admin@smartfold.lk", password: "admin123", role: "ADMIN", name: "Admin", token: "demo-admin-token" },
+    { email: "customer@test.lk", password: "pass123", role: "CUSTOMER", name: "Test Customer", token: "demo-customer-token" },
+    { email: "nimali@smartfold.lk", password: "pass123", role: "CUSTOMER", name: "Nimali Jayasinghe", token: "demo-nimali-token" },
+    { email: "ruwan@smartfold.lk", password: "pass123", role: "CUSTOMER", name: "Ruwan Perera", token: "demo-ruwan-token" },
+    { email: "laundry@smartfold.lk", password: "staff123", role: "LAUNDRY_STAFF", name: "Saman Silva", token: "demo-laundry-token" },
+    { email: "delivery@smartfold.lk", password: "staff123", role: "DELIVERY_STAFF", name: "Ishara Kumara", token: "demo-delivery-token" },
 ];
 
 function validate() {
@@ -82,9 +84,11 @@ function handleSuccess(user) {
 
     toastSuccess(`Welcome back, ${user.name ?? user.email}!`);
     setTimeout(() => {
+        // Admin goes to admin dashboard, all other roles go to user dashboard
         if (normalizedUser.role === "ADMIN") {
             window.location.href = "./dashboard-admin.html";
         } else {
+            // CUSTOMER, LAUNDRY_STAFF, DELIVERY_STAFF, etc. go to user dashboard
             window.location.href = "./dashboard-user.html";
         }
     }, 200);

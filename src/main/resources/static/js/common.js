@@ -121,11 +121,17 @@ export function setCurrentUser(user, token) {
 export function clearCurrentUser() {
     clearAuth();
 }
-export function requireAuth(role) {
+export function requireAuth(allowedRoles) {
     const auth = requireAuthOrRedirect();
     const user = auth?.user;
     if (!user) return null;
-    if (role && user.role !== role) {
+
+    // Convert single role to array for consistent handling
+    const roles = Array.isArray(allowedRoles) ? allowedRoles : (allowedRoles ? [allowedRoles] : []);
+
+    // If specific roles are required, check if user has one of them
+    if (roles.length > 0 && !roles.includes(user.role)) {
+        // Redirect based on user's actual role
         window.location.href = user.role === "ADMIN" ? "./dashboard-admin.html" : "./dashboard-user.html";
         return null;
     }
