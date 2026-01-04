@@ -920,6 +920,298 @@ tbody tr:hover td {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Place Order Page                                                           */
+/* -------------------------------------------------------------------------- */
+.place-order-page {
+    min-height: 100vh;
+    background: var(--background);
+}
+
+.place-order-header {
+    background: var(--gradient);
+    color: white;
+    padding: 48px 0 32px;
+    text-align: center;
+}
+
+.place-order-header h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.place-order-header p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+}
+
+.place-order-main {
+    padding: 40px 0 60px;
+}
+
+.place-order-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    align-items: start;
+}
+
+/* Service Menu Section */
+.service-menu {
+    padding: 28px;
+}
+
+.service-menu .subhead {
+    margin-bottom: 24px;
+}
+
+.service-menu .subhead h2 {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Service Cards */
+.service-card {
+    background: var(--background);
+    border-radius: 16px;
+    padding: 24px;
+    border: 2px solid var(--border);
+    transition: all 0.3s var(--ease-out);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.service-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.service-card.selected {
+    border-color: var(--primary);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.service-card h3 {
+    font-size: 1.1rem;
+    color: var(--heading);
+    font-weight: 700;
+}
+
+.service-card p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+}
+
+.service-card .price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: rgba(37, 99, 235, 0.08);
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.service-card .service-select {
+    margin-top: auto;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+}
+
+/* Summary Panel Sidebar */
+.summary-panel {
+    position: sticky;
+    top: 100px;
+    padding: 24px;
+}
+
+.summary-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.summary-header h2 {
+    font-size: 1.25rem;
+    margin-bottom: 4px;
+}
+
+.repeat-pill {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.summary-panel .field-group {
+    margin-bottom: 16px;
+}
+
+.summary-panel .field-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--heading);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.summary-panel input[type="datetime-local"] {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+}
+
+.summary-list-wrapper {
+    min-height: 80px;
+    background: var(--background);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 20px 0;
+}
+
+.summary-list-wrapper:empty::before {
+    content: 'No services selected yet. Select a service to begin your order.';
+    color: var(--muted);
+    font-size: 0.9rem;
+    display: block;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.addon-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--background);
+    border-radius: 10px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.addon-toggle:hover {
+    background: var(--border);
+}
+
+.addon-toggle input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+}
+
+.addon-toggle span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.totals {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.total-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.total-line .label {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.total-line .value {
+    font-weight: 600;
+    color: var(--heading);
+}
+
+.total-line.total-amount {
+    padding-top: 16px;
+    margin-top: 8px;
+    border-top: 2px solid var(--border);
+}
+
+.total-line.total-amount .label {
+    font-weight: 700;
+    color: var(--heading);
+    font-size: 1.1rem;
+}
+
+.total-line.total-amount .value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.place-order-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px 24px;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.place-order-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Place Order Responsive */
+@media (max-width: 1024px) {
+    .place-order-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-panel {
+        position: static;
+    }
+
+    .service-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .place-order-header {
+        padding: 32px 0 24px;
+    }
+
+    .place-order-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .service-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-menu {
+        padding: 20px;
+    }
+
+    .summary-panel {
+        padding: 20px;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
 /* Track Order Page                                                           */
 /* -------------------------------------------------------------------------- */
 .track-order-page {
