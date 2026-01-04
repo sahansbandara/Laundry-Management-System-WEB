@@ -35,8 +35,9 @@ Use these credentials to explore the different user roles in the system.
 | Role | Email | Password | Access Level |
 |------|-------|----------|--------------|
 | **Admin** | `admin@smartfold.lk` | `1234` | Full access to Dashboard, Orders, Users, Inventory, Settings |
-| **Customer** | `nimal@smartfold.lk` | `1234` | Place orders, Track status, View history, Subscriptions |
+| **Customer** | `nimali@smartfold.lk` | `1234` | Place orders, Track status, View history, Subscriptions |
 | **Customer** | `ruwan@smartfold.lk` | `1234` | Place orders, Track status, View history, Subscriptions |
+| **Customer** | `kamal@smartfold.lk` | `1234` | Place orders, Track status, View history, Subscriptions |
 
 > **Note:** The application starts with an in-memory database (H2). All data resets when the application restarts.
 
