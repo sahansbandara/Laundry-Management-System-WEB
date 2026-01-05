@@ -84,12 +84,22 @@ function handleSuccess(user) {
 
     toastSuccess(`Welcome back, ${user.name ?? user.email}!`);
     setTimeout(() => {
-        // Admin goes to admin dashboard, all other roles go to user dashboard
-        if (normalizedUser.role === "ADMIN") {
-            window.location.href = "./dashboard-admin.html";
-        } else {
-            // CUSTOMER, LAUNDRY_STAFF, DELIVERY_STAFF, etc. go to user dashboard
-            window.location.href = "./dashboard-user.html";
+        // Redirection Logic
+        switch (normalizedUser.role) {
+            case "ADMIN":
+            case "LAUNDRY_STAFF":
+            case "FINANCE_STAFF":
+            case "CUSTOMER_SERVICE":
+                window.location.href = "./dashboard-admin.html";
+                break;
+            case "DELIVERY_STAFF":
+            case "DRIVER":
+            case "DELIVERY":
+                window.location.href = "./dashboard-driver.html";
+                break;
+            default:
+                // CUSTOMER and others
+                window.location.href = "./dashboard-user.html";
         }
     }, 200);
 }

@@ -7,237 +7,137 @@
     <title>Place New Order - SmartFold Laundry</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        :root {
-            --primary: #1e40af;
-            --primary-light: #3b82f6;
-            --primary-dark: #1e3a8a;
-            --accent: #0ea5e9;
-            --bg-light: #f1f5f9;
-            --bg-card: #ffffff;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --success: #10b981;
-            --error: #ef4444;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-light);
-            color: var(--text-dark);
-            min-height: 100vh;
-        }
-
-        .page-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .page-header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-header p {
-            opacity: 0.9;
-            font-size: 1rem;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-        }
-
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Service Menu (Left) */
-        .service-menu h2 {
+        /* Specific overrides for Place Order page only where necessary */
+        .service-menu h2,
+        .order-summary h2 {
             font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary-dark);
+            margin-bottom: 24px;
+            color: var(--heading);
+            font-weight: 700;
         }
 
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .service-grid {
-                grid-template-columns: 1fr;
-            }
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
         }
 
         .service-card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s var(--ease-out);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .service-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
-            border-color: var(--primary-light);
-        }
-
-        .service-card.express {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-        }
-
-        .service-card.premium {
-            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-color: var(--primary);
         }
 
         .service-card h3 {
             color: var(--primary);
             font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
         .service-card .description {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.95rem;
             line-height: 1.5;
+            margin-bottom: 16px;
+            flex-grow: 1;
         }
 
         .service-card .price {
-            font-weight: 700;
-            color: var(--text-dark);
             font-size: 1.1rem;
-            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--heading);
+            margin-bottom: 20px;
         }
 
         .service-card .price span {
             color: var(--primary);
         }
 
-        .btn-select {
+        .btn-select,
+        .btn-place-order,
+        .btn-confirm {
             width: 100%;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.875rem 1.5rem;
-            border-radius: 10px;
+            padding: 12px 20px;
+            border-radius: var(--btn-radius);
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
-        .btn-select:hover {
-            background: var(--primary-dark);
-            transform: scale(1.02);
+        .btn-select:hover,
+        .btn-place-order:hover,
+        .btn-confirm:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
         }
 
-        /* Order Summary (Right) */
+        /* Order Summary Sticky Panel */
         .order-summary {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
             position: sticky;
-            top: 2rem;
-            height: fit-content;
-        }
-
-        .order-summary h2 {
-            font-size: 1.25rem;
-            color: var(--primary-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .order-summary .subtitle {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .datetime-group {
-            margin-bottom: 1.5rem;
+            top: 100px;
+            /* Accounts for floating navbar */
         }
 
         .datetime-group label {
             display: block;
             font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
         }
 
         .datetime-group input {
             width: 100%;
-            padding: 0.75rem;
-            border: 2px solid var(--border);
+            padding: 12px;
+            border: 1px solid var(--border);
+            background: var(--background);
+            color: var(--text-main);
             border-radius: 8px;
-            font-size: 0.95rem;
-            transition: border-color 0.3s;
+            font-size: 1rem;
+            font-family: var(--font-main);
         }
 
         .datetime-group input:focus {
             outline: none;
-            border-color: var(--primary-light);
-        }
-
-        .datetime-group .error-msg {
-            color: var(--error);
-            font-size: 0.8rem;
-            margin-top: 0.25rem;
-            display: none;
-        }
-
-        .datetime-group.error input {
-            border-color: var(--error);
-        }
-
-        .datetime-group.error .error-msg {
-            display: block;
+            border-color: var(--primary);
+            box-shadow: var(--focus-ring);
         }
 
         .order-items {
             border-top: 1px solid var(--border);
-            padding-top: 1rem;
-            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            margin: 24px 0;
             min-height: 100px;
         }
 
-        .empty-order {
-            color: var(--text-muted);
-            text-align: center;
-            padding: 2rem;
-            font-style: italic;
-        }
-
         .order-item {
-            padding: 0.75rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
             border-bottom: 1px dashed var(--border);
         }
 
@@ -245,342 +145,86 @@
             border-bottom: none;
         }
 
-        .order-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.25rem;
+        .order-item .name {
+            font-weight: 600;
+            color: var(--heading);
         }
 
-        .order-item-header .name {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .order-item-header .amount {
-            font-weight: 600;
+        .order-item .amount {
+            font-weight: 700;
             color: var(--primary);
-        }
-
-        .order-item .details {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            padding-left: 0.75rem;
-        }
-
-        .order-item .details li {
-            list-style: disc;
-            margin-left: 1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .order-item .remove-btn {
-            background: none;
-            border: none;
-            color: var(--error);
-            cursor: pointer;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-        }
-
-        .order-item .remove-btn:hover {
-            text-decoration: underline;
-        }
-
-        /* Addons */
-        .addons {
-            background: var(--bg-light);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .addon-option {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.5rem 0;
-        }
-
-        .addon-option input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary);
-        }
-
-        .addon-option label {
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            cursor: pointer;
-        }
-
-        /* Totals */
-        .totals {
-            border-top: 2px solid var(--border);
-            padding-top: 1rem;
-            margin-bottom: 1.5rem;
+            margin-left: auto;
+            margin-right: 12px;
         }
 
         .total-row {
             display: flex;
             justify-content: space-between;
-            padding: 0.5rem 0;
-            font-size: 0.95rem;
+            padding: 8px 0;
+            font-size: 1rem;
+            color: var(--text-muted);
         }
 
         .total-row.grand-total {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            border-top: 2px solid var(--primary);
-            padding-top: 1rem;
-            margin-top: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--heading);
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid var(--border);
         }
 
-        .btn-place-order {
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
-            border: none;
-            padding: 1rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-place-order:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
-        }
-
-        .btn-place-order:disabled {
-            background: var(--text-muted);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* Modal Overlay */
+        /* Modals */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-
-        .modal-overlay.active {
-            display: flex;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
         }
 
         .modal {
-            background: white;
-            border-radius: 20px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
             box-shadow: var(--shadow-lg);
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            color: var(--text-main);
         }
 
         .modal-header {
-            background: var(--primary);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 20px 20px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            font-size: 1.25rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0.8;
-        }
-
-        .modal-close:hover {
-            opacity: 1;
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        /* KG Input Modal */
-        .kg-input-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .kg-input-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .kg-input-group input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 1.25rem;
-            text-align: center;
-        }
-
-        .kg-input-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .kg-preview {
-            background: var(--bg-light);
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .kg-preview .price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        /* Category Table Modal */
-        .category-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1.5rem;
-        }
-
-        .category-table th,
-        .category-table td {
-            padding: 0.75rem;
-            text-align: left;
+            background: var(--bg);
+            color: var(--heading);
             border-bottom: 1px solid var(--border);
         }
 
-        .category-table th {
-            background: var(--bg-light);
-            font-weight: 600;
-            font-size: 0.85rem;
+        .modal-close {
             color: var(--text-muted);
         }
 
-        .category-table td.category-name {
-            font-weight: 500;
-        }
-
-        .category-table td.price-cell {
-            color: var(--primary);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .category-table input[type="number"] {
-            width: 70px;
-            padding: 0.5rem;
-            border: 2px solid var(--border);
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        .category-table input[type="number"]:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .category-total {
-            background: var(--bg-light);
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .category-total .items {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 0.25rem;
-        }
-
-        .category-total .price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .modal-footer {
-            padding: 0 1.5rem 1.5rem;
-            display: flex;
-            gap: 1rem;
+        .modal-close:hover {
+            color: var(--danger);
         }
 
         .btn-cancel {
-            flex: 1;
-            padding: 0.875rem;
-            border: 2px solid var(--border);
-            background: white;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
         }
 
         .btn-cancel:hover {
-            background: var(--bg-light);
+            background: var(--bg);
+            color: var(--heading);
         }
 
-        .btn-confirm {
-            flex: 2;
-            padding: 0.875rem;
-            border: none;
-            background: var(--primary);
-            color: white;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+        .kg-preview,
+        .category-total {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
         }
 
-        .btn-confirm:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-confirm:disabled {
-            background: var(--text-muted);
-            cursor: not-allowed;
+        .kg-preview .price,
+        .category-total .price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
         }
     </style>
 </head>
@@ -821,7 +465,7 @@
             if (kg <= 0) return;
 
             const price = kg * currentKgService.pricePerKg;
-            
+
             // Check if service already exists, update it
             const existingIndex = orderItems.findIndex(item => item.serviceId === currentKgService.id);
             if (existingIndex >= 0) {
@@ -855,7 +499,7 @@
         function openCategoryModal(serviceId, serviceName) {
             currentCategoryService = { id: serviceId, name: serviceName };
             document.getElementById('category-modal-title').textContent = serviceName;
-            
+
             const isPressing = serviceId === 'pressing';
             const tbody = document.getElementById('category-table-body');
             tbody.innerHTML = '';
@@ -971,7 +615,7 @@
         // Render Order Items
         function renderOrderItems() {
             const container = document.getElementById('order-items');
-            
+
             if (orderItems.length === 0) {
                 container.innerHTML = '<p class="empty-order">No services selected yet.</p>';
                 return;
@@ -981,13 +625,13 @@
             orderItems.forEach((item, index) => {
                 html += `<div class="order-item">`;
                 html += `<div class="order-item-header">`;
-                
+
                 if (item.type === 'kg') {
                     html += `<span class="name">${item.serviceName} (${item.quantity} kg)</span>`;
                 } else {
                     html += `<span class="name">${item.serviceName}</span>`;
                 }
-                
+
                 html += `<span>
                     <span class="amount">LKR ${item.price.toLocaleString()}</span>
                     <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
@@ -1028,7 +672,7 @@
             const grandTotal = subtotal + expressAmount + premiumAmount;
 
             document.getElementById('subtotal').textContent = `LKR ${subtotal.toLocaleString()}`;
-            
+
             document.getElementById('express-row').style.display = expressChecked ? 'flex' : 'none';
             document.getElementById('express-amount').textContent = `LKR ${expressAmount.toLocaleString()}`;
 

@@ -211,11 +211,11 @@ Before running the application, ensure you have:
 
 2. **Run the Application**
    ```bash
-   # Using Gradle Wrapper (default port 8080)
+   # Using Gradle Wrapper (runs on port 8081 by default)
    ./gradlew bootRun
    
-   # Or run on custom port (e.g., 8081)
-   ./gradlew bootRun --args='--server.port=8081'
+   # Or run on custom port (e.g., 8082)
+   ./gradlew bootRun --args='--server.port=8082'
    
    # On Windows
    gradlew.bat bootRun
@@ -225,12 +225,12 @@ Before running the application, ensure you have:
    
    Open your browser and navigate to:
    ```
-   http://localhost:8080
+   http://localhost:8081
    ```
    
-   Or if using custom port 8081:
+   Or if using custom port:
    ```
-   http://localhost:8081
+   http://localhost:8082
    ```
    
    The application will automatically redirect to the login page.
@@ -241,11 +241,11 @@ Before running the application, ensure you have:
 # Build the JAR file
 ./gradlew clean build
 
-# Run the JAR (default port 8080)
+# Run the JAR (default port 8081)
 java -jar build/libs/laundry-management-system-0.0.1-SNAPSHOT.jar
 
 # Run on custom port
-java -jar build/libs/laundry-management-system-0.0.1-SNAPSHOT.jar --server.port=8081
+java -jar build/libs/laundry-management-system-0.0.1-SNAPSHOT.jar --server.port=8082
 ```
 
 ---
@@ -270,7 +270,7 @@ Use these pre-configured accounts to explore different user roles:
 - The application uses an **in-memory H2 database** by default. All data resets when the server restarts.
 - For production use, configure a persistent database (MySQL/PostgreSQL) in `application.properties`.
 - Change default passwords before deploying to production.
-- Default port is **8080**. To run on a different port (e.g., 8081), use: `./gradlew bootRun --args='--server.port=8081'`
+- Default port is **8081**. To run on a different port (e.g., 8082), use: `./gradlew bootRun --args='--server.port=8082'`
 
 ---
 
@@ -462,7 +462,7 @@ POST /api/orders
 
 Access interactive API documentation at:
 ```
-http://localhost:8080/swagger-ui.html
+http://localhost:8081/swagger-ui.html
 ```
 
 ---
@@ -551,8 +551,8 @@ Edit `src/main/resources/application.properties` to configure:
 
 #### Server Configuration
 ```properties
-# Server port (default: 8080)
-server.port=8080
+# Server port (default: 8081)
+server.port=8081
 
 # Application name
 spring.application.name=SmartFold Laundry System
@@ -588,7 +588,7 @@ jwt.expiration=86400000  # 24 hours in milliseconds
 #### CORS Configuration
 ```properties
 # Allowed origins (adjust for production)
-cors.allowed-origins=http://localhost:3000,http://localhost:8080
+cors.allowed-origins=http://localhost:3000,http://localhost:8081
 ```
 
 ---
@@ -598,21 +598,21 @@ cors.allowed-origins=http://localhost:3000,http://localhost:8080
 ### Common Issues
 
 <details>
-<summary><b>Port 8080 Already in Use</b></summary>
+<summary><b>Port 8081 Already in Use</b></summary>
 
-**Error**: `Web server failed to start. Port 8080 was already in use.`
+**Error**: `Web server failed to start. Port 8081 was already in use.`
 
 **Solution**:
 ```bash
 # Option 1: Run on a different port
-./gradlew bootRun --args='--server.port=8081'
+./gradlew bootRun --args='--server.port=8082'
 
-# Option 2: Kill the process using port 8080
+# Option 2: Kill the process using port 8081
 # On macOS/Linux:
-lsof -ti:8080 | xargs kill -9
+lsof -ti:8081 | xargs kill -9
 
 # On Windows:
-netstat -ano | findstr :8080
+netstat -ano | findstr :8081
 taskkill /PID <PID> /F
 ```
 </details>
@@ -620,7 +620,7 @@ taskkill /PID <PID> /F
 <details>
 <summary><b>CORS Errors in Browser Console</b></summary>
 
-**Error**: `Access to fetch at 'http://localhost:8080/api/...' has been blocked by CORS policy`
+**Error**: `Access to fetch at 'http://localhost:8081/api/...' has been blocked by CORS policy`
 
 **Solution**: Ensure `@CrossOrigin("*")` is present on controllers, or configure global CORS in `SecurityConfig.java`:
 
@@ -628,7 +628,7 @@ taskkill /PID <PID> /F
 @Bean
 public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+    configuration.setAllowedOrigins(Arrays.asList("http://localhost:8081"));
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
     configuration.setAllowedHeaders(Arrays.asList("*"));
     configuration.setAllowCredentials(true);

@@ -1,4 +1,4 @@
-export const API_BASE = window.API_BASE || "http://localhost:8080";
+export const API_BASE = window.API_BASE || "";
 const toastContainerId = "toast-container";
 const AUTH_STORAGE_KEY = "smartfold_auth";
 
@@ -190,4 +190,40 @@ export function toggleTheme() {
 }
 
 // Auto-init theme
+/* ---------- Scroll Reveal ---------- */
+export function initScrollReveal() {
+    // 1. Auto-tag common elements if they don't have the class yet
+    const autoTargets = document.querySelectorAll("section, .card, .card-soft, .table-wrapper, .kpi-row");
+    autoTargets.forEach((el, index) => {
+        if (!el.classList.contains("reveal-on-scroll")) {
+            el.classList.add("reveal-on-scroll");
+            // Add slight stagger for items already in viewport or in sequence
+            if (index < 5) el.style.transitionDelay = `${index * 0.1}s`;
+        }
+    });
+
+    // 2. Set up Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal--visible");
+                observer.unobserve(entry.target); // Animate only once
+            }
+        });
+    }, {
+        threshold: 0.15, // Trigger when 15% visible
+        rootMargin: "0px 0px -50px 0px" // Slightly offset from bottom
+    });
+
+    // 3. Observe all targets
+    document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
+        observer.observe(el);
+    });
+}
+
+// Auto-init theme & animations
 initTheme();
+// Use requestAnimationFrame to ensure DOM is ready for animations
+requestAnimationFrame(() => {
+    initScrollReveal();
+});

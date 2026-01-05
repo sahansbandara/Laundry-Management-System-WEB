@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = '/api';
 const STORAGE_KEY = 'user';
 
 const toastContainer = document.createElement('div');

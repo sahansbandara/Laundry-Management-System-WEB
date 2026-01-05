@@ -1,7 +1,7 @@
 (function () {
   const qs = new URLSearchParams(location.search);
   const orderId = qs.get("orderId");
-  const base = ""; // served by Spring static → same-origin (http://localhost:8080)
+  const base = ""; // served by Spring static → same-origin
   if (!orderId) { alert("Missing order ID"); return; }
 
   // Optional: fetch order total for nicer UI (ignore errors)

@@ -6,38 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SmartFold — Login</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
 
-<body class="auth-page">
-    <div class="auth-wrapper">
-        <div class="card auth-card">
-            <h1 class="brand-heading">SmartFold</h1>
-            <p class="muted">Welcome back</p>
-            <form id="login-form" novalidate class="form-vertical">
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="admin@smartfold.lk"
-                        value="admin@smartfold.lk" required />
-                    <div class="helper-text" data-for="email"></div>
-                </div>
-                <div class="field">
-                    <label for="password">Password</label>
-                    <input id="password" name="password" type="password" placeholder="1234" value="1234" required />
-                    <div class="helper-text" data-for="password"></div>
-                </div>
-                <p id="login-error" class="helper-text" role="alert"></p>
-                <button type="submit" class="btn-primary full-width">Sign In</button>
-            </form>
-            <p class="muted small-text" style="margin-top: 0.5rem; text-align: center;">Admin: admin@smartfold.lk /
-                admin123 | Customer: customer@test.lk / pass123
-            </p>
-            <p class="muted small-text">No account? <a href="register.html">Register</a></p>
-            <div style="margin-top: 1rem; text-align: center;">
-                <button id="theme-toggle" class="btn-pill pill-ghost" style="font-size: 0.8rem;">Toggle Theme</button>
+<body class="auth-page-glass">
+
+    <!-- Left Side: Image Area (visible through background) -->
+    <div class="auth-glass-left"></div>
+
+    <!-- Right Side: Glass Panel Overlay -->
+    <div class="auth-glass-right">
+        <div class="glass-panel">
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="glass-theme-toggle" aria-label="Toggle Theme">
+                <span class="theme-icon-sun">☀️</span>
+                <span class="theme-icon-moon">🌙</span>
+            </button>
+
+            <div class="glass-panel-header">
+                <h1 class="glass-title">Welcome back</h1>
+                <p class="glass-subtitle">Please enter your details.</p>
             </div>
+
+            <form id="login-form" novalidate class="glass-form">
+                <div class="glass-field">
+                    <label for="email">E-mail</label>
+                    <input id="email" name="email" type="email" placeholder="Enter your e-mail" required />
+                    <div class="helper-text glass-helper" data-for="email"></div>
+                </div>
+
+                <div class="glass-field">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Enter your password" required />
+                    <div class="helper-text glass-helper" data-for="password"></div>
+                </div>
+
+                <div class="glass-actions-row">
+                    <label class="glass-checkbox">
+                        <input type="checkbox" id="remember-me">
+                        <span class="checkmark"></span>
+                        Remember me
+                    </label>
+                    <a href="#" class="glass-forgot-link">Forgot your password?</a>
+                </div>
+
+                <p id="login-error" class="helper-text glass-error-message" role="alert"></p>
+
+                <button type="submit" class="btn-glass-primary">Log in</button>
+            </form>
+
+            <p class="glass-footer-text">
+                Don't have an account? <a href="register.html">Register here</a>
+            </p>
         </div>
     </div>
+
+    <!-- Scripts -->
     <script type="module" src="js/login.js"></script>
+    <script>
+        // Initialize theme from localStorage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
 </body>
 
 </html>
