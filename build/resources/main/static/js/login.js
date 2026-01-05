@@ -74,15 +74,20 @@ function findDemoUser(email, password) {
     return DEMO_USERS.find((u) => u.email === email && u.password === password);
 }
 
-function handleSuccess(user) {
-    const token = user.token ?? user.accessToken ?? "session-token";
-    const normalizedUser = { ...user };
-    delete normalizedUser.token;
-    delete normalizedUser.password;
-    normalizedUser.role = (user.role ?? "USER").toString().toUpperCase();
+function handleSuccess(response) {
+    // Handle both nested API response { token, user, message } and flat demo user objects
+    const token = response.token ?? response.accessToken ?? "session-token";
+    const userData = response.user ?? response; // Use nested user if available, otherwise treat as flat
+
+    const normalizedUser = {
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        role: (userData.role ?? "USER").toString().toUpperCase()
+    };
     setCurrentUser(normalizedUser, token);
 
-    toastSuccess(`Welcome back, ${user.name ?? user.email}!`);
+    toastSuccess(`Welcome back, ${normalizedUser.name ?? normalizedUser.email}!`);
     setTimeout(() => {
         // Redirection Logic
         switch (normalizedUser.role) {

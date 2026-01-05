@@ -8,7 +8,7 @@ import {
     toggleTheme,
 } from "./common.js";
 
-const user = requireAuth("CUSTOMER");
+const user = requireAuth(["CUSTOMER", "USER"]);
 
 const themeToggle = document.getElementById("theme-toggle");
 themeToggle?.addEventListener("click", () => {

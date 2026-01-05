@@ -20,12 +20,6 @@
     <!-- Right Side: Glass Panel Overlay -->
     <div class="auth-glass-right">
         <div class="glass-panel">
-            <!-- Theme Toggle Button -->
-            <button id="theme-toggle" class="glass-theme-toggle" aria-label="Toggle Theme">
-                <span class="theme-icon-sun">☀️</span>
-                <span class="theme-icon-moon">🌙</span>
-            </button>
-
             <div class="glass-panel-header">
                 <h1 class="glass-title">Welcome back</h1>
                 <p class="glass-subtitle">Please enter your details.</p>
@@ -67,13 +61,8 @@
     <!-- Scripts -->
     <script type="module" src="js/login.js"></script>
     <script>
-        // Initialize theme from localStorage or system preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
+        // Force dark theme for elegant login page
+        document.documentElement.setAttribute('data-theme', 'dark');
     </script>
 </body>
 
